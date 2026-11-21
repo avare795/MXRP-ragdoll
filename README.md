@@ -37,10 +37,7 @@ Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragd
 
 ## Planned
 
-These features are planned for later versions:
-
-- **VR view while walking** — play the on-foot part in VR.
-- **Refuelling system** — refuel your bike during sessions.
+See the [Roadmap](ROADMAP.md) for what's coming in future versions.
 
 ## Support
 
