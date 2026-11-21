@@ -6,6 +6,10 @@ Features planned for future versions of MXRP Ragdoll. This list will grow over t
 
 - [ ] **VR view while walking** — play the on-foot part in VR.
 - [ ] **Refuelling system** — refuel your bike during sessions.
+- [ ] **Emotes** — animations for your rider on foot.
+- [ ] **Combat** — fight other riders on foot.
+- [ ] **More objects** — new track objects to place, beyond cones and hay bales.
+- [ ] **Overall improvements** — better animations, physics and performance across the whole plugin.
 
 ## Done
 
