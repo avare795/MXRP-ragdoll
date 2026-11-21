@@ -32,6 +32,7 @@ Plugin pour **MX Bikes** qui ajoute un vrai système de ragdoll au pilote : apr�
 
 Les instructions exactes sont précisées dans chaque release.
 
-## Bugs et suggestions
+## Support
 
-Ouvre une [issue](../../issues) en décrivant le problème (version du plugin, solo ou multi, et si possible un clip).
+- **Discord** : https://discord.gg/XcEYYrB6CX
+- Ou ouvre une [issue](../../issues) en décrivant le problème (version du plugin, solo ou multi, et si possible un clip).
