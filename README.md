@@ -6,7 +6,10 @@ Ragdoll plugin for **MX Bikes** (beta21e, Steam). When you crash, your rider no 
 
 ## Download
 
-Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragdoll/releases/latest) page: download `MXRP_Beta_x.x.zip`, unzip it and run the `.exe` installer. It finds MX Bikes by itself and keeps your settings.
+Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragdoll/releases/latest) page and choose how to install:
+
+- **Automatic (recommended)** — `MXRP_Beta_x.x.zip`: unzip and run the `.exe` installer. It finds MX Bikes by itself, removes old versions and keeps your settings.
+- **Manual** — `MXRP_Beta_x.x_manual.zip`: copy the content of its `plugins` folder into the `plugins` folder of MX Bikes (next to `mxbikes.exe`) and remove any old version of the plugin. Step-by-step instructions are in the release notes.
 
 > **Official servers:** before playing on them, move `MXRP_Ragdoll.dlo` out of the game's `plugins` folder. The ON / OFF button is not enough — the game still loads the plugin.
 
