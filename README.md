@@ -1,38 +1,50 @@
 # MXRP Ragdoll
 
-Plugin pour **MX Bikes** qui ajoute un vrai système de ragdoll au pilote : après une chute, le pilote ne réapparaît plus directement sur la moto, il tombe, se relève et peut se déplacer à pied.
+Ragdoll plugin for **MX Bikes** (beta21e, Steam). When you crash, your rider no longer snaps straight back onto the bike: he falls for real, gets up, and can walk back to his bike, lift it and ride again — solo and online.
 
-> Ce dépôt contient uniquement les **releases** (fichiers du plugin prêts à installer). Le code source n'est pas distribué.
+> This repository only hosts the **releases** (ready-to-install plugin files). The source code is not distributed.
 
-## Fonctionnalités prévues
+## Download
 
-### Ragdoll et chute
-- Le pilote est éjecté et chute de façon physique (ragdoll) au lieu du reset classique.
-- Le pilote se relève après la chute.
+Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragdoll/releases/latest) page: download `MXRP_Beta_x.x.zip`, unzip it and run the `.exe` installer. It finds MX Bikes by itself and keeps your settings.
 
-### Après la chute
-- **Marcher** : le pilote peut se déplacer à pied après être tombé.
-- **Relever la moto** : retourner à sa moto, la relever et remonter dessus pour repartir.
-- **Caméra qui suit le pilote** pendant qu'il marche.
-- Plus tard : **vue VR** en marchant.
+> **Official servers:** before playing on them, move `MXRP_Ragdoll.dlo` out of the game's `plugins` folder. The ON / OFF button is not enough — the game still loads the plugin.
 
-### Multijoueur
-- Fonctionne **en ligne comme en solo** : chute, moto relevée et remontée visibles par tous.
-- Activé sur les serveurs qui ont **« ragdoll »** dans leur nom.
+## Features
 
-### Plus tard
-- Système de **ravitaillement**.
+### Crash and ragdoll
+- Physics ragdoll on every crash; the rider rolls on the real track surface.
+- Helmet, boots, arms and legs don't go through the ground, walls or track objects.
+- Natural get-up: rolls over, gets on all fours, one knee, then stands.
 
-## Installation
+### On foot
+- Walk, run and jump back to your bike, lift it and get back on.
+- Get off the bike when stopped (offline).
+- The camera follows the rider and keeps the view you had while riding (1st or 3rd person).
 
-1. Télécharge la dernière version dans l'onglet [Releases](../../releases).
-2. Copie les fichiers du plugin dans le dossier `plugins` de ton installation MX Bikes
-   (par exemple `C:\Program Files (x86)\Steam\steamapps\common\MX Bikes\plugins`).
-3. Lance le jeu.
+### Track objects
+- **Cones**: place, pick up, carry, push, put down or reset them.
+- **Hay bales**: the round bale is a solid wall; the small bale can be pushed and carried. Bikes hit both.
 
-Les instructions exactes sont précisées dans chaque release.
+### Online
+- Works on servers with **RAGDOLL** in their name — nothing to set up.
+- See other players fall, walk and lift their bikes; players collide with each other.
+- Cones and hay bales are shared between players.
+- Players without the plugin are kicked automatically after 60 s.
+
+### Settings
+- Menu **P**: keys, language (English, French, Spanish, German, Italian), rider, helmet and boots.
+
+## Planned
+
+These features are planned for later versions:
+
+- **VR view while walking** — play the on-foot part in VR.
+- **Refuelling system** — refuel your bike during sessions.
 
 ## Support
 
-- **Discord** : https://discord.gg/XcEYYrB6CX
-- Ou ouvre une [issue](../../issues) en décrivant le problème (version du plugin, solo ou multi, et si possible un clip).
+- **Discord:** https://discord.gg/XcEYYrB6CX
+- Or open an [issue](https://github.com/avare795/MXRP-ragdoll/issues) describing the problem (plugin version, solo or online, and a clip if possible).
+
+Walking animation: CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu).
