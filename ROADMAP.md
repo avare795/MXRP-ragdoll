@@ -9,7 +9,6 @@ Features planned for future versions of MXRP Ragdoll. This list will grow over t
 - [ ] **Emotes** — animations for your rider on foot.
 - [ ] **Combat** — fight other riders on foot.
 - [ ] **Ramps at any height** — ramps rideable even above the highest point of the track.
-- [ ] **Push the bike on foot** — walk next to your bike holding the handlebars.
 - [ ] **More objects** — new track objects to place, beyond cones, hay bales and ramps.
 - [ ] **Overall improvements** — better animations, physics and performance across the whole plugin.
 
