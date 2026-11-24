@@ -22,16 +22,17 @@ Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragd
 
 ### On foot
 - Walk, run and jump back to your bike, lift it and get back on.
-- Get off the bike when stopped (offline).
+- Get off the bike when stopped.
 - The camera follows the rider and keeps the view you had while riding (1st or 3rd person).
 
 ### Track objects
 - **Cones**: place, pick up, carry, push, put down or reset them.
 - **Hay bales**: the round bale is a solid wall; the small bale can be pushed and carried. Bikes hit both.
-- **FMX ramps** (Beta 3): 9 shapes (kickers, long jumps, landing, quarter pipe, run-in) and 4 colours, placed anywhere from the wheel. They follow the slope of the ground and you ride them like dirt. Limit: a ramp can't go higher than the highest point of the track — the plugin warns you when it does, so you can place it lower.
+- **FMX ramps**: 8 shapes (kickers, long jumps, landing, quarter pipe) and 4 colours, placed anywhere from the wheel. They follow the slope of the ground and become part of the track, like a track's bridges: rideable at any height (Beta 3.1). Their sides and back are solid. Shown in replays.
 
 ### Online
-- Works on servers with **RAGDOLL** in their name — nothing to set up.
+- With the button ON, the plugin works everywhere — offline (practice and race) and online. Host with the button ON and **RAGDOLL** is added to your server name.
+- On RAGDOLL servers, nothing to set up:
 - See other players fall, walk and lift their bikes; players collide with each other.
 - Cones, hay bales and ramps are shared between players.
 - Players without the plugin are kicked automatically after 60 s.
@@ -51,4 +52,4 @@ See the [Roadmap](ROADMAP.md) for what's coming in future versions.
 - Or open an [issue](https://github.com/avare795/MXRP-ragdoll/issues) describing the problem (plugin version, solo or online, and a clip if possible).
 
 Walking animation: CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu).
-FMX ramps: PROCworks FMX Ramp PACK (PROCworks - Proud Racers Of Canada); landing from the "FMX Ramps" pack; Comp, Super kicker, 120 ft jump, quarter pipe and run-in from "thefluffygecko fmx ramps".
+FMX ramps: PROCworks FMX Ramp PACK (PROCworks - Proud Racers Of Canada); landing from the "FMX Ramps" pack; Comp, Super kicker, 120 ft jump, and quarter pipe from "thefluffygecko fmx ramps".
