@@ -22,8 +22,10 @@ Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragd
 
 ### On foot
 - Walk, run and jump back to your bike, lift it and get back on.
+- Crouch (Shift or right stick click) — Beta 3.2.
 - Get off the bike when stopped.
 - The camera follows the rider and keeps the view you had while riding (1st or 3rd person).
+- First person: 4-level zoom (mouse wheel, wheel click or D-pad up) and adjustable field of view in menu P — Beta 3.2.
 
 ### Track objects
 - **Cones**: place, pick up, carry, push, put down or reset them.
@@ -36,6 +38,9 @@ Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragd
 - See other players fall, walk and lift their bikes; players collide with each other.
 - Cones, hay bales and ramps are shared between players.
 - Players without the plugin are kicked automatically after 60 s.
+
+### Updates
+- **Automatic updates** (Beta 3.2): the plugin downloads new versions from this page and asks you on the track whether to install them. Can be turned off, or set to install without asking, in menu P.
 
 ### Settings
 - Menu **P**: keys, language (English, French, Spanish, German, Italian — or Auto, following Windows), rider, helmet and boots.

@@ -21,5 +21,6 @@ Features planned for future versions of MXRP Ragdoll. This list will grow over t
 - [x] Performance fixes for objects (Beta 2.2)
 - [x] FMX ramps, Xbox / PlayStation button symbols, tutorial, automatic language, support for the game update of 23 Nov 2026 (Beta 3)
 - [x] Ramps rideable at any height with solid sides, ramps in replays, plugin works everywhere when ON (Beta 3.1)
+- [x] Automatic updates, crouch, first-person zoom and field of view on foot (Beta 3.2)
 
 Have an idea? Share it on the [Discord](https://discord.gg/XcEYYrB6CX).
