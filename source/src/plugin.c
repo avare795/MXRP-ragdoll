@@ -72,7 +72,7 @@ static void release_inputs(const char *why);
 #include <time.h>
 #endif
 
-#define PLUGIN_VERSION "1.8.204"
+#define PLUGIN_VERSION "1.8.205"
 #define SEAT_FWD 0.12f /* v1.7.10 : fesses plus en avant sur la selle que la pose apprise */
 #define HAND_FWD 0.06f
 #define SEAT_DOWN 0.07f /* v1.7.11 : assis plus bas que la pose apprise (pas assez assis, vu en jeu) */
@@ -1029,7 +1029,8 @@ static volatile float g_wheel_px = 0.0f, g_wheel_py = 0.0f;
 static char g_msg[192] = ""; /* v1.8.141 : 192 (avertissement des rampes) */
 /* v1.2 */
 static int g_srv_ragdoll = 0;
-static int g_srv_tagged = 0; /* v1.8.204 : nom du serveur avec RAGDOLL (même multi coupé) */
+static int g_srv_tagged = 0;
+static int g_session_online = 0; /* v1.8.204 : session sur un serveur (en ligne) */ /* v1.8.204 : nom du serveur avec RAGDOLL (même multi coupé) */
 static int g_is_host = 0;    /* v1.8.204 : on héberge (liste des joueurs remplie) */
 static int g_learn_off = 0; /* v1.7.30 : en ligne : la pose sur la moto n'est pas apprise */     /* en ligne sur un serveur RAGDOLL */
 static char g_my_name[100] = "";
@@ -6183,6 +6184,7 @@ MXB_EXPORT int Startup(char *_szSavePath)
         log_line("dossier : %d fichier(s) / dossier(s) du plugin ranges dans %s", g_moved_in, g_rdir); /* v1.8.105 : copie des profils du jeu (lecture seule cote profil) */
     /* v0.40.87 : case « Plugin Ragdoll » des menus du jeu (sous Crash sur saut) */
     uiswitch_start(log_line, (volatile int *)&g_cfg.enabled, _szSavePath, g_rdir);
+    uiswitch_set_online(g_cfg.online_ok); /* v1.8.204 */
     log_line("configuration : %s", ini_ok == 2 ? OLD_INI_PATH " (ancien nom, a renommer en MXRP_Ragdoll.ini)" : ini_ok ? INI_PATH : "valeurs par defaut (ini introuvable)");
     if (g_migrated)
         log_line("nom : %d fichier(s) / dossier(s) mxb_ragdoll_* renommes en MXRP_Ragdoll_*", g_migrated);
@@ -6448,16 +6450,19 @@ MXB_EXPORT void EventInit(void *_pData, int _iDataSize)
            l'affichage seulement. Jamais sur les autres serveurs. */
         g_srv_ragdoll = online && tagged;
         g_srv_tagged = g_srv_ragdoll; /* v1.8.204 : serveur RAGDOLL, même si notre multi est coupé */
-        if (g_srv_ragdoll && !g_cfg.online_ok) {
-            /* v1.8.204 : multi coupé (de base) : un serveur RAGDOLL est traité comme un autre serveur :
-               rien n'est envoyé ni reçu, le plugin ne s'active pas tout seul */
+        g_session_online = online;
+        if (online && !g_cfg.online_ok) {
+            /* v1.8.204 : multi coupé (de base) : en ligne, le plugin est en pause pour la session, sur tous les
+               serveurs (rien n'est envoyé ni reçu, rien n'est changé dans le jeu) ; il s'active quand le joueur
+               active le multi (question au premier lancement, ou menu P) */
             g_srv_ragdoll = 0;
-            log_line("serveur RAGDOLL : multi coupe par le joueur (menu P), rien n'est partage en ligne");
+            log_line("en ligne : multi coupe par le joueur (menu P) : plugin en pause pour la session");
             if (g_cfg.online_asked) {
-                snprintf(g_msg, sizeof(g_msg), "%s", tr("Serveur RAGDOLL : ton multi est coupe (menu P pour l'activer)."));
+                snprintf(g_msg, sizeof(g_msg), "%s", tr("En ligne : plugin en pause, ton multi est coupe (menu P pour l'activer)."));
                 g_msg_t = now_seconds() + 8.0;
             }
         }
+        uiswitch_pause(online && !g_cfg.online_ok);
         uiswitch_force(g_srv_ragdoll); /* v1.7.25 */
         players_reset(); /* v1.8 */
         g_gfx_dir[0] = '\0'; /* v1.7.27 : gfx.cfg de la moto relu à chaque session */
@@ -6549,6 +6554,8 @@ MXB_EXPORT void EventDeinit(void)
     release_inputs(NULL);
     uiswitch_event(0);
     uiswitch_force(0); /* v1.7.25 */
+    uiswitch_pause(0); /* v1.8.204 */
+    g_session_online = 0;
     net_game_channel(0); /* v1.7.25 : plus rien vers la liste des serveurs */
     net_sticky_clear();  /* v1.8.196 : fin de session : nos objets ne sont plus renvoyés */
     g_obj_session = 0;   /* v1.8.197 */
@@ -9514,11 +9521,13 @@ static void upd_draw(int *nq, int *ns, int on_track)
 static void online_apply(void)
 {
     static int last = -1;
+    uiswitch_set_online(g_cfg.online_ok);
     if (last == g_cfg.online_ok)
         return;
     if (last >= 0) {
         g_srv_ragdoll = g_srv_tagged && g_cfg.online_ok;
         uiswitch_force(g_srv_ragdoll);
+        uiswitch_pause(g_session_online && !g_cfg.online_ok);
         if (g_srv_ragdoll && !uiswitch_button_on())
             g_cfg.enabled = 1;
         net_game_channel(g_srv_ragdoll && g_cfg.net_on);
@@ -9582,10 +9591,10 @@ static void mlt_draw(int *nq, int *ns, int on_track)
     set_quad(&g_quads[(*nq)++], x0, y0, x1, y0 + 0.05f, 0xFF0078D0UL);
     set_string(&g_strings[*ns], tr("Activer le multi ?"), 0.5f, y0 + 0.011f, 0.026f, 0xFFFFFFFF);
     g_strings[(*ns)++].m_iJustify = 1;
-    set_string(&g_strings[*ns], tr("Sur les serveurs RAGDOLL, ton pilote, tes chutes et tes objets sont envoyes"), 0.5f, y0 + 0.075f,
+    set_string(&g_strings[*ns], tr("En ligne, le plugin ne marche qu'avec le multi : sur les serveurs RAGDOLL, ton pilote,"), 0.5f, y0 + 0.075f,
                0.020f, 0xFFFFFFFF);
     g_strings[(*ns)++].m_iJustify = 1;
-    set_string(&g_strings[*ns], tr("aux autres joueurs du plugin, et tu vois les leurs."), 0.5f, y0 + 0.108f, 0.020f, 0xFFFFFFFF);
+    set_string(&g_strings[*ns], tr("tes chutes et tes objets sont partages avec les autres joueurs du plugin."), 0.5f, y0 + 0.108f, 0.020f, 0xFFFFFFFF);
     g_strings[(*ns)++].m_iJustify = 1;
     padicon_text(g_quads, MAX_QUADS, nq, g_strings, MAX_STRINGS, ns,
                  tr("Entree / A : activer   -   Retour / B : non (menu P pour changer)"), 0.5f, y1 - 0.05f, 0.019f, 0xFFFFFFFF, 1,
@@ -9833,8 +9842,22 @@ static void draw_impl(int _iState, int *_piNumQuads, void **_ppQuad, int *_piNum
         glcam_set_scene_active(g_cfg.cones_3d && (cones_hist_count() || cones_count() || cones_net_remote_count() ||
                                                   bales_hist_count() || bales_count() || bales_net_remote_count() ||
                                                   ramps_hist_count() || ramps_count() || ramps_net_remote_count()));
-    if (!c->enabled || _iState != 0)
+    if (!c->enabled || _iState != 0) {
+        /* v1.8.204 : en ligne sans le multi (plugin en pause) : la question du multi s'affiche quand même */
+        if (_iState == 0 && g_session_online && !g_cfg.online_ok) {
+            nq = 0;
+            ns = 0;
+            mlt_draw(&nq, &ns, 1);
+            online_apply();
+            if (nq || ns) {
+                *_piNumQuads = nq;
+                *_ppQuad = g_quads;
+                *_piNumString = ns;
+                *_ppString = g_strings;
+            }
+        }
         return;
+    }
     nq = 0;
     if (cones_count() && !glcam_scene_recent() && draw_rows_update()) {
         /* (secours : si le dessin 3D dans la scène ne s'est pas fait) */

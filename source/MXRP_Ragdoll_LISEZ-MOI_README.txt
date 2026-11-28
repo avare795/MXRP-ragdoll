@@ -66,6 +66,9 @@ in menu P ("same as on the bike" by default).
 - Menu P: gamepad buttons shown as Xbox or PlayStation (Auto / Xbox / PlayStation).
 
 5. ONLINE
+- Online play is OFF until you turn it on: the plugin asks you once ("Turn on online play?"),
+  and menu P has "Online: share with other plugin players". While it is off, the plugin
+  pauses itself on every online server and sends nothing.
 - With the button ON, the plugin works everywhere: offline (practice and race) and online.
   When you host with the button ON, RAGDOLL is added to the server name for you: on a
   RAGDOLL server, players see each other's ragdolls, cones, bales and ramps.
@@ -155,6 +158,9 @@ au prochain lancement du jeu. Menu P : "Mises a jour automatiques" (OUI / NON) e
 - Menu P : boutons de la manette affiches facon Xbox ou PlayStation (Auto / Xbox / PlayStation).
 
 5. EN LIGNE
+- Le multi est COUPE tant que tu ne l'actives pas : le plugin te le demande une fois
+  ("Activer le multi ?"), et le menu P a "Multi : partager avec les autres joueurs du plugin".
+  Coupe, le plugin se met en pause sur tous les serveurs en ligne et n'envoie rien.
 - Bouton ACTIF : le plugin marche partout, hors ligne (essai et course) et en ligne.
   Quand tu heberges avec le bouton ACTIF, RAGDOLL est ajoute au nom du serveur tout seul :
   sur un serveur RAGDOLL, les joueurs voient les ragdolls, cones, bottes et rampes des autres.
@@ -244,6 +250,8 @@ la proxima vez que inicies el juego. Menu P: "Actualizaciones automaticas" (SI /
 - Menu P: botones del mando al estilo Xbox o PlayStation (Auto / Xbox / PlayStation).
 
 5. EN LINEA
+- El multijugador esta DESACTIVADO hasta que lo actives: el plugin lo pregunta una vez y el
+  menu P tiene la opcion. Desactivado, el plugin se pausa en todos los servidores y no envia nada.
 - Con el boton en ON, el plugin funciona en todas partes, sin conexion y en linea. Si
   alojas con el boton en ON, RAGDOLL se anade al nombre: en un servidor RAGDOLL los
   jugadores ven los ragdolls, conos, pacas y rampas de los demas.
@@ -331,6 +339,8 @@ Installieren eines Updates fragen" (AUS = ohne Nachfrage installiert). Zu Fuss i
 - Erster Start: ein kurzes Tutorial (im Menue P erneut anzeigen). Gamepad-Tasten als
   Xbox- oder PlayStation-Symbole. Sprache wie Windows (Auto), ausser du waehlst eine.
 5. ONLINE
+- Online-Spiel ist AUS, bis du es einschaltest: das Plugin fragt einmal, und Menue P hat die
+  Option. Aus pausiert das Plugin auf allen Online-Servern und sendet nichts.
 - Mit ON funktioniert das Plugin ueberall, offline und online. Wenn du mit ON hostest,
   wird RAGDOLL zum Namen hinzugefuegt: auf einem RAGDOLL-Server sehen die Spieler
   Ragdolls, Kegel, Ballen und Rampen der anderen.
@@ -416,6 +426,8 @@ campo visivo si regola nel menu P ("come sulla moto" di default).
 - Menu P: tasti del controller in stile Xbox o PlayStation (Auto / Xbox / PlayStation).
 
 5. ONLINE
+- Il gioco online e SPENTO finche non lo attivi: il plugin lo chiede una volta e il menu P ha
+  l'opzione. Spento, il plugin si mette in pausa su tutti i server online e non invia nulla.
 - Con il pulsante su ON il plugin funziona ovunque, offline e online. Se ospiti con ON,
   RAGDOLL viene aggiunto al nome: su un server RAGDOLL i giocatori vedono ragdoll, coni,
   balle e rampe degli altri.

@@ -35,7 +35,7 @@ WIN_SRC = src/plugin.c src/hook.c src/skelscan.c src/drive.c src/walk.c src/terr
 WIN_HDR = src/mxb_api.h src/hook.h src/skelscan.h src/drive.h src/walk.h src/terrain.h src/glcam.h src/mocap_walk.inc src/camhook.h src/bike.h src/padinject.h src/rider_skeleton_beta21e.inc src/replay.h src/rclock.h src/net.h src/kbhook.h src/objects.h src/players.h src/ramps.h src/ramp_model.inc src/bales.h src/bale_model.inc src/furn_model.inc
 
 $(BUILD)/MXRP_Ragdoll.dlo: $(WIN_SRC) $(WIN_HDR) $(CORE_SRC) $(CORE_HDR) | $(BUILD)
-	$(MINGW_CC) $(CFLAGS) -shared -static-libgcc -s -o $@ $(WIN_SRC) $(CORE_SRC) -lm -ldxguid -lws2_32 -liphlpapi -lopengl32 -lgdi32 -lwinhttp -lbcrypt
+	$(MINGW_CC) $(CFLAGS) -shared -static-libgcc -s -Wl,--no-insert-timestamp -o $@ $(WIN_SRC) $(CORE_SRC) -lm -ldxguid -lws2_32 -liphlpapi -lopengl32 -lgdi32 -lwinhttp -lbcrypt
 
 dlo: $(BUILD)/MXRP_Ragdoll.dlo
 
@@ -45,11 +45,11 @@ clean:
 # installeur à donner aux amis : make installer
 installer: build/MXRP_Ragdoll.dlo
 	x86_64-w64-mingw32-windres -DRC_PLUGIN="\\\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\\\"" installer/installer.rc -O coff -o build/installer.res
-	x86_64-w64-mingw32-gcc -O2 -Wall -s -mwindows -static -DVER="\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\"" installer/installer.c src/inflate.c build/installer.res -o build/MXRP_Ragdoll_Installer.exe -lshell32 -lole32 -ladvapi32
+	x86_64-w64-mingw32-gcc -O2 -Wall -s -mwindows -static -Wl,--no-insert-timestamp -DVER="\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\"" installer/installer.c src/inflate.c build/installer.res -o build/MXRP_Ragdoll_Installer.exe -lshell32 -lole32 -ladvapi32
 	cp build/MXRP_Ragdoll_Installer.exe "build/MXRP Ragdoll $$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2).exe"
 .PHONY: installer
 # installeur nommé pour une release (ex. : make installer-release NAME="MXRP Beta 2")
 installer-release: build/MXRP_Ragdoll.dlo
 	x86_64-w64-mingw32-windres -DRC_NAME="\\\"$(NAME)\\\"" -DRC_PLUGIN="\\\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\\\"" installer/installer.rc -O coff -o build/installer.res
-	x86_64-w64-mingw32-gcc -O2 -Wall -s -mwindows -static -DVER="\"$(NAME)\"" -DTITLE_NAME="\"$(NAME) ($$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2))\"" installer/installer.c src/inflate.c build/installer.res -o "build/$(NAME).exe" -lshell32 -lole32 -ladvapi32
+	x86_64-w64-mingw32-gcc -O2 -Wall -s -mwindows -static -Wl,--no-insert-timestamp -DVER="\"$(NAME)\"" -DTITLE_NAME="\"$(NAME) ($$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2))\"" installer/installer.c src/inflate.c build/installer.res -o "build/$(NAME).exe" -lshell32 -lole32 -ladvapi32
 .PHONY: installer-release

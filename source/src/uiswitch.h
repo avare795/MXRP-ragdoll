@@ -11,5 +11,7 @@ void uiswitch_on_track(int on);
 void uiswitch_event(int on);
 /* v1.7.25 : sur un serveur RAGDOLL le plugin marche même si le bouton a été coupé en solo */
 void uiswitch_force(int on);
+void uiswitch_pause(int on);
+void uiswitch_set_online(int on); /* v1.8.204 : multi activé (RAGDOLL ajouté au nom du serveur hébergé) */ /* v1.8.204 : en ligne sans le multi : plugin en pause */
 int uiswitch_button_on(void);
 #endif

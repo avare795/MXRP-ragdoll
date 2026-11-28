@@ -29,6 +29,8 @@ static volatile int *g_enabled = NULL;
 static volatile int g_on_track = 0;
 static volatile int g_in_event = 0;
 static volatile int g_on = 1;
+static volatile int g_online = 0; /* v1.8.204 : multi activé par le joueur */
+static volatile int g_pause = 0; /* v1.8.204 : en ligne sans le multi : plugin en pause pour la session */
 static volatile int g_force = 0; /* v1.7.25 : serveur RAGDOLL : actif pour la session, bouton pas changé */
 static volatile int g_need_full = 1;
 static volatile int g_need_txt = 1;
@@ -689,8 +691,9 @@ static DWORD WINAPI watch_thread(LPVOID unused)
     while (g_run) {
         int k, bad = 0, down = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
         DWORD now = GetTickCount();
-        if (g_enabled && (*g_enabled ? 1 : 0) != (g_on || g_force))
-            *g_enabled = g_on || g_force; /* le plugin suit toujours le bouton (ou un serveur RAGDOLL) */
+        if (g_enabled && (*g_enabled ? 1 : 0) != ((g_on || g_force) && !g_pause))
+            *g_enabled = (g_on || g_force) && !g_pause; /* le plugin suit toujours le bouton (ou un serveur RAGDOLL) ;
+                                                           v1.8.204 : en pause en ligne sans le multi */
         if (!g_on_track && !g_in_event) {
             if (g_nhit > 0)
                 g_menu_case_t = now | 1;
@@ -731,7 +734,7 @@ static DWORD WINAPI watch_thread(LPVOID unused)
             }
             show_state(g_on);
             LeaveCriticalSection(&g_cs);
-            srv_update(g_on);
+            srv_update(g_on && g_online); /* v1.8.204 : RAGDOLL ajouté au nom seulement avec le multi */
             if (bad)
                 g_need_full = 1;
             if (pending) {
@@ -796,4 +799,11 @@ void uiswitch_event(int on) { (void)on; }
 #endif
 
 void uiswitch_force(int on) { g_force = on; }
+void uiswitch_set_online(int on) { g_online = on; } /* v1.8.204 */
+void uiswitch_pause(int on) /* v1.8.204 */
+{
+    g_pause = on;
+    if (g_enabled)
+        *g_enabled = (g_on || g_force) && !g_pause;
+}
 int uiswitch_button_on(void) { return g_on; }

@@ -1,7 +1,7 @@
-# Builds MXRP Ragdoll from the source in this repository (run by hand from the Actions tab, with the
-# release number, e.g. 3.4), and attaches the files to a DRAFT release whose tag v<number> points to the
-# exact commit that was built (the tag is created when the author publishes the release).
-# Anyone can check in the Actions log that the release files come from that code.
+# Builds MXRP Ragdoll from a public tag (run by hand from the Actions tab, with the release number,
+# e.g. 3.4): it first creates and pushes the tag v<number> on the current commit of main, checks that
+# tag out, builds and tests from it, and attaches the files to a DRAFT release for that tag (the author
+# writes the notes and publishes it). Anyone can check in the Actions log that the files come from that tag.
 name: Build release
 
 on:
@@ -20,8 +20,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Release name
-        run: echo "REL=${{ inputs.version }}" >> "$GITHUB_ENV"
+      - name: Create the public tag and build from it
+        run: |
+          REL="${{ inputs.version }}"
+          case "$REL" in *[!0-9A-Za-z.-]*|'') echo "bad version"; exit 1;; esac
+          echo "REL=$REL" >> "$GITHUB_ENV"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "v$REL"
+          git push origin "v$REL"
+          git checkout --detach "v$REL"
+          echo "Building tag v$REL at commit $(git rev-parse HEAD)"
 
       - name: Install MinGW-w64
         run: |
@@ -67,6 +76,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "v${REL}" out/* --draft --target "$GITHUB_SHA" \
+          gh release create "v${REL}" out/* --draft --verify-tag \
             --title "MXRP Beta ${REL}" \
-            --notes "Built by GitHub Actions from commit $GITHUB_SHA: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            --notes "Built by GitHub Actions from tag v${REL} (commit $(git rev-parse HEAD)): $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
