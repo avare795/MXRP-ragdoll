@@ -2,7 +2,7 @@
 
 Ragdoll plugin for **MX Bikes** (beta21e, Steam — game update of 23 November 2026 supported). When you crash, your rider no longer snaps straight back onto the bike: he falls for real, gets up, and can walk back to his bike, lift it and ride again — solo and online.
 
-> This repository only hosts the **releases** (ready-to-install plugin files). The source code is not distributed.
+> This repository hosts the **releases** (ready-to-install plugin files). Only the source of the installer and of the automatic updates is published, in the [`source`](source) folder (read-only licence); the rest of the plugin's code is not distributed.
 
 ## Download
 
