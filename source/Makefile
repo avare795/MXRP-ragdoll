@@ -45,11 +45,11 @@ clean:
 # installeur à donner aux amis : make installer
 installer: build/MXRP_Ragdoll.dlo
 	x86_64-w64-mingw32-windres -DRC_PLUGIN="\\\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\\\"" installer/installer.rc -O coff -o build/installer.res
-	x86_64-w64-mingw32-gcc -O2 -Wall -s -mwindows -static -Wl,--no-insert-timestamp -DVER="\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\"" installer/installer.c src/inflate.c build/installer.res -o build/MXRP_Ragdoll_Installer.exe -lshell32 -lole32 -ladvapi32
+	$(MINGW_CC) -O2 -Wall -s -mwindows -static -Wl,--no-insert-timestamp -DVER="\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\"" installer/installer.c src/inflate.c build/installer.res -o build/MXRP_Ragdoll_Installer.exe -lshell32 -lole32 -ladvapi32
 	cp build/MXRP_Ragdoll_Installer.exe "build/MXRP Ragdoll $$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2).exe"
 .PHONY: installer
 # installeur nommé pour une release (ex. : make installer-release NAME="MXRP Beta 2")
 installer-release: build/MXRP_Ragdoll.dlo
 	x86_64-w64-mingw32-windres -DRC_NAME="\\\"$(NAME)\\\"" -DRC_PLUGIN="\\\"$$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)\\\"" installer/installer.rc -O coff -o build/installer.res
-	x86_64-w64-mingw32-gcc -O2 -Wall -s -mwindows -static -Wl,--no-insert-timestamp -DVER="\"$(NAME)\"" -DTITLE_NAME="\"$(NAME) ($$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2))\"" installer/installer.c src/inflate.c build/installer.res -o "build/$(NAME).exe" -lshell32 -lole32 -ladvapi32
+	$(MINGW_CC) -O2 -Wall -s -mwindows -static -Wl,--no-insert-timestamp -DVER="\"$(NAME)\"" -DTITLE_NAME="\"$(NAME) ($$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2))\"" installer/installer.c src/inflate.c build/installer.res -o "build/$(NAME).exe" -lshell32 -lole32 -ladvapi32
 .PHONY: installer-release

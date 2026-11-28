@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Create the public tag and build from it
         run: |
@@ -32,16 +32,23 @@ jobs:
           git checkout --detach "v$REL"
           echo "Building tag v$REL at commit $(git rev-parse HEAD)"
 
-      - name: Install MinGW-w64
+      - name: Install MinGW-w64 (exact versions, Ubuntu 24.04 "noble" release)
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 zip python3-cryptography
+          sudo apt-get install -y --no-install-recommends \
+            gcc-mingw-w64-x86-64-win32=13.2.0-6ubuntu1+26.1 \
+            gcc-mingw-w64-x86-64-win32-runtime=13.2.0-6ubuntu1+26.1 \
+            gcc-mingw-w64-base=13.2.0-6ubuntu1+26.1 \
+            binutils-mingw-w64-x86-64=2.41.90.20240122-1ubuntu1+11.4 \
+            mingw-w64-x86-64-dev=11.0.1-3build1 \
+            mingw-w64-common=11.0.1-3build1
+          x86_64-w64-mingw32-gcc-win32 --version | head -1
 
       - name: Build and test
         working-directory: source
         run: |
-          make
-          make installer-release NAME="MXRP Beta ${REL}"
+          make MINGW_CC=x86_64-w64-mingw32-gcc-win32
+          make installer-release MINGW_CC=x86_64-w64-mingw32-gcc-win32 NAME="MXRP Beta ${REL}"
 
       - name: Package
         working-directory: source
@@ -50,10 +57,10 @@ jobs:
           mkdir -p ../out man/MXRP_Ragdoll/plugins
           cp build/MXRP_Ragdoll.dlo "../out/MXRP_Ragdoll_${VER}.dlo"
           cp "build/MXRP Beta ${REL}.exe" ../out/MXRP_Ragdoll_Installer.exe
-          (cd build && zip -q "../../out/MXRP_Beta_${REL}.zip" "MXRP Beta ${REL}.exe")
+          (cd build && python3 -m zipfile -c "../../out/MXRP_Beta_${REL}.zip" "MXRP Beta ${REL}.exe")
           cp MXRP_Ragdoll_LISEZ-MOI_README.txt man/MXRP_Ragdoll/
           cp build/MXRP_Ragdoll.dlo config/MXRP_Ragdoll.ini man/MXRP_Ragdoll/plugins/
-          (cd man && zip -qr "../../out/MXRP_Beta_${REL}_manual.zip" MXRP_Ragdoll)
+          (cd man && python3 -m zipfile -c "../../out/MXRP_Beta_${REL}_manual.zip" MXRP_Ragdoll)
 
       - name: Sign the update files
         env:
@@ -64,6 +71,7 @@ jobs:
             echo "::warning::No UPDATE_SIGN_KEY secret: the .sig files must be added by the author"
             exit 0
           fi
+          pip install --break-system-packages cryptography==44.0.0
           mkdir -p keys
           printf '%s\n' "$UPDATE_SIGN_KEY" > keys/maj_signature_privee.pem
           python3 tools/sign_release.py ../out/MXRP_Ragdoll_*.dlo ../out/MXRP_Ragdoll_Installer.exe
