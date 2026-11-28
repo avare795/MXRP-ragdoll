@@ -30,6 +30,7 @@ Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragd
 ### Track objects
 - **Cones**: place, pick up, carry, push, put down or reset them.
 - **Hay bales**: the round bale is a solid wall; the small bale can be pushed and carried. Bikes hit both.
+- **Furniture** (Beta 3.3): a folding table and two camping chairs on their own wheel page. Next to a chair, press the crouch key to sit down.
 - **FMX ramps**: 8 shapes (kickers, long jumps, landing, quarter pipe) and 4 colours, placed anywhere from the wheel. They follow the slope of the ground and become part of the track, like a track's bridges: rideable at any height (Beta 3.1). Their sides and back are solid. Shown in replays.
 
 ### Online
@@ -71,5 +72,6 @@ See the [Roadmap](ROADMAP.md) for what's coming in future versions.
 - Or open an [issue](https://github.com/avare795/MXRP-ragdoll/issues) describing the problem (plugin version, solo or online, and a clip if possible).
 
 Walking animation: CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu).
+Furniture: green camping chair by lpfeffer (CC-BY-4.0), folding table by Innerscene (CC0).
 FMX ramps: PROCworks FMX Ramp PACK (PROCworks - Proud Racers Of Canada); landing from the "FMX Ramps" pack; Comp, Super kicker, 120 ft jump, and quarter pipe from "thefluffygecko fmx ramps".
 Built with MinGW-w64 (GCC); its runtime is included in the plugin.
