@@ -10,7 +10,7 @@ This folder holds the full source of MXRP Ragdoll (plugin, installer, automatic 
 
 ## Releases are built by GitHub Actions
 
-Since Beta 3.4, every release is built from this folder by [GitHub Actions](../.github/workflows/release.yml) when a version tag is pushed: the Actions log shows the commit, the build, the tests and the SHA-256 of every file attached to the release (`SHA256SUMS.txt`).
+Since Beta 3.4, every release is built from this folder by [GitHub Actions](../.github/workflows/release.yml) started by hand from the Actions tab: the Actions log shows the commit, the build, the tests and the SHA-256 of every file attached to the release (`SHA256SUMS.txt`).
 
 ## Build it yourself
 

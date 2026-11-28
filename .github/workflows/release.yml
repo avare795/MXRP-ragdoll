@@ -1,11 +1,15 @@
-# Builds MXRP Ragdoll from the source in this repository when a tag v* is pushed,
-# and attaches the files to a DRAFT release for that tag (the author writes the notes and publishes it).
-# Anyone can check in the Actions log that the release files come from the tagged code.
+# Builds MXRP Ragdoll from the source in this repository (run by hand from the Actions tab, with the
+# release number, e.g. 3.4), and attaches the files to a DRAFT release whose tag v<number> points to the
+# exact commit that was built (the tag is created when the author publishes the release).
+# Anyone can check in the Actions log that the release files come from that code.
 name: Build release
 
 on:
-  push:
-    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release number (e.g. 3.4) -> tag v3.4, "MXRP Beta 3.4"'
+        required: true
 
 permissions:
   contents: write
@@ -16,6 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Release name
+        run: echo "REL=${{ inputs.version }}" >> "$GITHUB_ENV"
+
       - name: Install MinGW-w64
         run: |
           sudo apt-get update
@@ -25,12 +32,11 @@ jobs:
         working-directory: source
         run: |
           make
-          make installer-release NAME="MXRP Beta ${GITHUB_REF_NAME#v}"
+          make installer-release NAME="MXRP Beta ${REL}"
 
       - name: Package
         working-directory: source
         run: |
-          REL="${GITHUB_REF_NAME#v}"
           VER=$(grep -o 'PLUGIN_VERSION "[^"]*"' src/plugin.c | cut -d'"' -f2)
           mkdir -p ../out man/MXRP_Ragdoll/plugins
           cp build/MXRP_Ragdoll.dlo "../out/MXRP_Ragdoll_${VER}.dlo"
@@ -61,6 +67,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" out/* --draft --verify-tag \
-            --title "MXRP Beta ${GITHUB_REF_NAME#v}" \
-            --notes "Built by GitHub Actions from tag $GITHUB_REF_NAME (commit $GITHUB_SHA): $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          gh release create "v${REL}" out/* --draft --target "$GITHUB_SHA" \
+            --title "MXRP Beta ${REL}" \
+            --notes "Built by GitHub Actions from commit $GITHUB_SHA: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
