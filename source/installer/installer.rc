@@ -1,0 +1,35 @@
+1 RCDATA "../build/MXRP_Ragdoll.dlo"
+2 RCDATA "../MXRP_Ragdoll_LISEZ-MOI_README.txt"
+3 RCDATA "../config/MXRP_Ragdoll.ini"
+1 24 "installer.manifest"
+
+/* v1.8.161 : nom de la version dans les propriétés du fichier (clic droit > Propriétés > Détails) */
+#ifndef RC_NAME
+#define RC_NAME "MXRP Ragdoll"
+#endif
+#ifndef RC_PLUGIN
+#define RC_PLUGIN "?"
+#endif
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEOS 0x40004
+FILETYPE 0x1
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040C04B0"
+    BEGIN
+      VALUE "CompanyName", "MXRP"
+      VALUE "FileDescription", RC_NAME " - installation du plugin MXRP Ragdoll " RC_PLUGIN
+      VALUE "FileVersion", RC_PLUGIN
+      VALUE "ProductName", RC_NAME
+      VALUE "ProductVersion", RC_NAME " (" RC_PLUGIN ")"
+      VALUE "OriginalFilename", RC_NAME ".exe"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x040C, 1200
+  END
+END
