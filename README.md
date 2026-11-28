@@ -37,7 +37,7 @@ Get the latest version from the [Releases](https://github.com/avare795/MXRP-ragd
 - On RAGDOLL servers, nothing to set up:
 - See other players fall, walk and lift their bikes; players collide with each other.
 - Cones, hay bales and ramps are shared between players.
-- Players without the plugin are kicked automatically after 60 s.
+- Optional: when you host, players without the plugin can be kicked automatically (off by default, menu P).
 
 ### Updates
 - **Automatic updates** (Beta 3.2): the plugin downloads new versions from this page and asks you on the track whether to install them. Can be turned off, or set to install without asking, in menu P.
@@ -55,7 +55,7 @@ Plain facts, so you know what you install:
 - **Local network:** with `reseau = 1` (default) it looks for other players' plugins on your local network or VPN (UDP port 47731) to share walking and crashes.
 - **Online:** on RAGDOLL servers it sends other plugin users your rider's movements, crashes, your track objects and the plugin version, through the game's server connection or Steam's peer-to-peer networking (which identifies players by their Steam ID). When you host, your plugin forwards these messages between the other players. Every connection can be switched off in menu **P** or with `reseau = 0`.
 - **Steam ID:** on RAGDOLL servers the plugin can send its messages through Steam's peer-to-peer networking (no port to open). Steam delivers each message with the sender's Steam ID, the same ID the game already uses to connect you to the server and to the other players. The plugin only sends to players the game is already connected with, and its own messages carry your rider name and a random number that changes at every launch, not your Steam ID. Steam IDs are written only in the plugin's local log file (`Documents\PiBoSo\MX Bikes\MXRP_Ragdoll`), never uploaded anywhere. To avoid it, turn the online part off (menu **P** or `reseau = 0`).
-- **Auto-kick:** only when you host a RAGDOLL server, players without the plugin get a 60 s grace period, a 30 s warning, then are kicked (they can come back with the plugin).
+- **Auto-kick:** off by default. If you turn it on in menu **P**, and only when you host a RAGDOLL server, players without the plugin get a 60 s grace period, a 30 s warning, then are kicked (they can come back with the plugin). A message tells you about it the first time you launch the plugin and the first time you host.
 - **Game:** the plugin runs inside MX Bikes as a game plugin. It reads and patches the game's memory and code (rider skeleton, camera, physics, online packets) and reads your game profile for your key bindings, without changing it.
 - **Keys:** it reads the keyboard with a low-level keyboard hook for its own keys, and presses the game's respawn key for you when you get back on your bike.
 - **Files:** the installer only writes its own files (`MXRP_Ragdoll*` in the game's `plugins` folder). It removes older copies of this plugin, including the old name `mxb_ragdoll*.dlo` only when that file really is an old version of this plugin. Settings, logs and replays are kept in `Documents\PiBoSo\MX Bikes\MXRP_Ragdoll`. No registry changes, nothing starts with Windows.
